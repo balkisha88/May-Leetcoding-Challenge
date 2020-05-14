@@ -1,11 +1,11 @@
 class Node {
  public:   
-        vector<int> child;
+        Node *child[26];
         bool flag;
         Node()
         {
             for(int i=0;i<26;i++)
-                child.push_back(NULL);
+                child[i]=NULL;
             flag=false;
         }
       
@@ -15,47 +15,56 @@ class Node {
 class Trie {
 
     /** Initialize your data structure here. */
+public:   
+     Node *root;
    
-    
-    Node root;
-    public Trie() {
-        root=new Node();
+    Trie() {
+      root=new Node();
         
     }
     
     /** Inserts a word into the trie. */
     void insert(string word) {
-        Node temp=root;
+        Node *temp=root;
         for(int i=0;i<word.length();i++)
         {
-            int index=word.charAt(i)-'a';
-            if(temp.child[index]==NULL)
+            int index=word[i]-'a';
+            if(temp->child[index]==NULL)
             {
-                temp.child[index]=new Node();
+                temp->child[index]=new Node();
             }
-            temp=temp.child[index];
+            temp=temp->child[index];
         }
-        temp.flag=true;
+        temp->flag=true;
     }
     
     /** Returns if the word is in the trie. */
     bool search(string word) {
-        alpha temp=root;
+        Node *temp=root;
         for(int i=0;i<word.length();i++)
         {
-            int index=word.charAt(i)-'a';
-            while(temp.child[index]!=NULL)
-            {
-                temp=temp.child[index];
-            }
+            int index=word[i]-'a';
+            if(temp->child[index]==NULL)
+                return false;
+            temp=temp->child[index];
             
         }
-       return temp.flag;
+       return temp->flag;
         
     }
     
     /** Returns if there is any word in the trie that starts with the given prefix. */
     bool startsWith(string prefix) {
+        Node *temp=root;
+        for(int i=0;i<prefix.length();i++)
+        {
+            int index=prefix[i]-'a';
+            if(temp->child[index]==NULL)
+                return false;
+            temp=temp->child[index];
+            
+        }
+       return true;
         
     }
 };
