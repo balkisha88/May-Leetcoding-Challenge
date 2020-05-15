@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int maxSubarraySumCircular(vector<int>& A) {
+        int cur=A[0];
+        int ans=A[0];
+        int sum=A[0];
+        for(int i=1;i<A.size();i++)
+        {
+            sum+=A[i];
+            cur=max(A[i],cur+A[i]);
+            ans=max(cur,ans);
+            
+        }
+        cout<<ans;
+        cur=-A[0];
+        int inv=-A[0];
+        for(int i=1;i<A.size();i++)
+        {
+            A[i]=-A[i];
+            cur=max(A[i],cur+A[i]);
+            inv=max(cur,inv);
+            
+        }
+       
+        if ((inv+sum)==0)
+            return ans;
+        return ans<inv+sum?sum+inv:ans;
+        
+    }
+};
