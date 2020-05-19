@@ -48,3 +48,45 @@ public:
         return result;
     }
 };
+
+
+
+// sliding window easy solution
+
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> result;
+      if (s.length()<p.length())
+          return result;
+  
+        
+        vector<int> shash(26,0);
+        vector<int> phash(26,0);
+        
+        int i=0;
+        for(;i<p.length();i++)
+        {
+            shash[s[i]-'a']++;
+            
+            phash[p[i]-'a']++;
+            
+        }
+        
+        
+        if(shash==phash)
+            result.push_back(0);
+        for(;i<s.length();i++)
+        {
+            shash[s[i]-'a']++; 
+            shash[s[i-p.size()]-'a']--;
+            
+            
+            if(shash==phash)
+            {  
+                result.push_back((i-p.size())+1);}
+            
+        }
+        return result;
+    }
+};
